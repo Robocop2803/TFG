@@ -1,0 +1,125 @@
+<div class="jumbotron">
+                <h1 class="display-3 text-center">Process live</h1>
+                <p class="lead">Tabla con los procesos actializada cada 5 segundos.<a class="btn btn-primary float-right">Reload <i class="fas fa-sync-alt" onclick="actualizar()"></i></a></p>
+                  <div class="container">
+    <div class="row">    
+        <div class="col-xs-8 col-xs-offset-2">
+		    <div class="input-group">
+                <div class="input-group-btn search-panel">
+                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown">
+                    	<span id="search_concept"> Seleccionar  filtro:
+                        <script>
+                          function filtrarProcesos(type) {
+                            /** type = location.href[location.href.length-1]; **/
+                            switch(type) {
+                              case "o": var searched = "Nombre del Proceso:"; break;
+                              case "e": var searched = "Consumo CPU menor a:"; break;
+                              case "a": var searched = "Consumo CPU mayor a:"; break;
+                            };
+                            document.getElementById("search_concept").innerHTML = searched;
+                            type = searched[13];
+                          }
+                        </script>
+                        </span> <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu" role="menu">
+                      <li><a href="#" onclick="filtrarProcesos('o'); buscarProcesos('o')">Nombre del Proceso</a></li>
+                      <li><a href="#" onclick="filtrarProcesos('e'); buscarProcesos('e')">Cpu menor a</a></li>
+                      <li><a href="#" onclick="filtrarProcesos('a'); buscarProcesos('a')">Cpu mayor a</a></li>
+                      <li class="divider"></li>
+                    </ul>
+                </div>
+                <input type="text" class="form-control" id="myInput"  onkeyup="buscarProcesos((document.getElementById('search_concept').innerHTML)[13])" name="x" placeholder="Search term...">
+            </div>
+        </div>
+	</div>
+</div>
+<br>
+                <table class="table" id="myTable">
+                  <tr class="header"><th>Nombre Proceso</th><th>Consumo CPU</th><th class="text-center">Operación</th></tr>
+                  {{#each live.content}}
+                  <tr>
+                    <td class="align-middle">{{ProcessName}}</td>
+                    <td class="align-middle">{{CPU}}</td>
+                    <td class="text-center">
+                      <form action="/ordenador/{{../ordenador._id}}/killps/{{Id}}" method="POST">
+                        <button type="submit" class="btn btn-danger btn-rounded">Kill</button>
+                      </form>
+                      <form action="/ordenador/{{../ordenador._id}}/infops/{{Id}}" method="POST">
+                        <button type="submit" class="btn btn-info btn-rounded" >Info</button>
+                      </form>                    
+                      </td>
+                  </tr>
+                  {{/each}}
+                </table>
+              <script type="text/javascript">
+function actualizar(){location.reload(true);}
+//Función para actualizar cada 4 segundos(4000 milisegundos)
+ // setInterval("actualizar()",4000);
+</script>
+<script>
+  
+function buscarProcesos(type) {
+  // type = location.href[location.href.length-1];
+  switch(type) {
+    case "o":
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[0];
+        if (td) {
+          txtValue = td.textContent || td.innerText;
+          if (txtValue.toUpperCase().indexOf(filter) > -1) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+      break;
+    case "a":
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          if (parseFloat(td.textContent) > filter) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+      break;
+    case "e":
+      var input, filter, table, tr, td, i, txtValue;
+      input = document.getElementById("myInput");
+      filter = input.value.toUpperCase();
+      if(parseFloat(filter) = 0){filter = Infinity}else{ alert(filter);
+        filter = input.value.toUpperCase();
+        alert(filter);
+      };
+      table = document.getElementById("myTable");
+      tr = table.getElementsByTagName("tr");
+      for (i = 0; i < tr.length; i++) {
+        td = tr[i].getElementsByTagName("td")[1];
+        if (td) {
+          if (parseFloat(td.textContent) < filter) {
+            tr[i].style.display = "";
+          } else {
+            tr[i].style.display = "none";
+          }
+        }       
+      }
+      break;
+  }
+}
+// setInterval("myFunction()",500);
+
+</script>

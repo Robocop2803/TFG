@@ -1,0 +1,21 @@
+<div class="jumbotron">
+                <h1 class="display-3 text-center">Programas Instalados</h1>
+                <p class="lead">Tabla con los programas del equipo, actualizada diariamente o bajo demanda.</p>
+                <table class="table">
+                  <tr><th>Nombre programa</th><th>Version</th>  <th>Operación</th></tr>
+                  {{#each live.content}}
+                  <tr>
+                    <td class="align-middle">{{Name}}</td>
+                    <td class="align-middle">{{version}}</td>
+                    {{!-- <td class="align-middle">{{Installlocation}}</td> --}}
+                    <td>
+                    <form action="/ordenador/{{../ordenador._id}}/killsv/{{Name}}" method="POST">
+                        <button type="submit" class="btn btn-danger btn-rounded" style="width: 90%">Kill</button>
+                      </form>
+                      <form action="/ordenador/{{../ordenador._id}}/infosv/{{Name}}" method="POST">
+                        <button type="submit" class="btn btn-info btn-rounded" style="width: 90%">Info</button>
+                      </form>
+                    </td>  
+                  </tr>
+                  {{/each}}
+                </table>

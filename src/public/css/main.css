@@ -1,0 +1,21 @@
+body{
+    background: #0F2027;
+    background: -webkit-linear-gradient(to right, #2C5364, #203A43, #0F2027);
+    background: linear-gradient(to right, #2C5364, #203A43, #0F2027);
+}
+.logo {
+    margin-top: 5%;
+    width: 50%;
+    border-radius: 10px;
+    box-shadow: 0 0 15px #ddd;
+}
+.btn-rounded {
+    border-radius: 10px;
+    padding: 2px;
+    margin-bottom: 5px;
+    width: 50%;
+}
+
+.img-fluid {
+   max-width: 20%;
+}

@@ -1,0 +1,24 @@
+<script src="https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/3.0.1/handlebars.min.js"></script>
+<script src="/try/examples/js/handlebars_helpers_if_eq.js"></script>
+ 
+<div class="jumbotron">
+                <h1 class="display-3 text-center">Servicios live</h1>
+                <p class="lead">Tabla con los servicios actualizada cada 5 segundos.</p>
+                <table class="table">
+                  <tr><th>Nombre servicio</th><th>Vendedor</th><th class="text-center">Status</th><th>Operación</th></tr>
+                  {{#each live.content}}
+                  <tr>
+                    <td class="align-middle">{{Name}}</td>
+                    <td class="align-middle" >{{DisplayName}}</td>
+                    <td class="align-middle" style="color: {{Color}}; font-weight: 900 ;">{{Status}}</td>
+                    <td>
+                    <form action="/ordenador/{{../ordenador._id}}/killsv/{{Name}}" method="POST">
+                        <button type="submit" class="btn btn-danger btn-rounded" style="width: 90%">Kill</button>
+                      </form>
+                      <form action="/ordenador/{{../ordenador._id}}/infosv/{{Name}}" method="POST">
+                        <button type="submit" class="btn btn-info btn-rounded" style="width: 90%">Info</button>
+                      </form>
+                    </td>  
+                  </tr>
+                  {{/each}}
+                </table>

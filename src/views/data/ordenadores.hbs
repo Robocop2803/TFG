@@ -1,0 +1,63 @@
+<h1>Dispositivos   <a  href="/LogX program/LogX.ps1" download="LogX.ps1"  class="btn btn-secondary btn-lg">add new device&nbsp&nbsp<i class="fas fa-plus-circle"></i></a></h1>
+<br>
+<div class="row">
+    {{#each ordenadores}}
+    <div class="col-md-3">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title d-flex justify-content-between align-center">
+                    {{name}} <i class="fas fa-laptop"></i><a href="#">
+                    <i class="fas fa-trash-alt" data-toggle="modal" data-target="#exampleModal{{_id}}"></i>
+                    </a>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal{{_id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">¿Seguro que desea borrar el equipo {{name}}?</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Los datos del equipo {{name}} dejaran de ser registrados, confirme su operacion.
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <form action="/ordenadores/delete/{{_id}}?_method=DELETE" method="POST">
+        <input type="hidden" name="_method" value="DELETE">
+        <button type="submit" class="btn btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+                </h4>
+                <p>{{os}}</p> 
+                <a href="/ordenador/{{_id}}" class="btn btn-primary btn-block">Entrar</a>
+            </div>
+        </div>
+    </div>
+    {{else}}
+    <div class="card mx-auto" style="width: 18rem;">
+        <div class="card-body">
+            <h1 class="text-center">hello {{user.name}}</h1>
+            <p class="lead text-justify">No hay ordenadores aun,
+                descarga el instalador y registra uno.</p>
+                <a href="/LogX program/LogX.ps1" download="LogX" class="btn btn-success btn-block">
+Descargar Archivo</a>
+        </div>
+    </div>
+    
+{{/each}}
+</div>
+<script type="text/javascript">
+$('#myModal').on('shown.bs.modal', function () {
+  $('#myInput').trigger('focus')
+})
+</script> 
+<script type="text/javascript">
+  function actualizar(){location.reload(true);}
+//Función para actualizar cada 4 segundos(4000 milisegundos)
+//  setInterval("actualizar()",4000);
+</script>
